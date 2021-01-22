@@ -63,3 +63,146 @@ Migrating to AddTextToOrders (20210122220524)
   [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
   [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(7787968138899382140)[0m
   [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (186.3ms)[0m  [1m[35mCREATE DATABASE "orderup_development" ENCODING = 'unicode'[0m
+  [1m[35m (81.4ms)[0m  [1m[35mCREATE DATABASE "orderup_test" ENCODING = 'unicode'[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (31.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7787968138899382140)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateOrders (20210122204047)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE TABLE "orders" ("id" bigserial primary key, "name" character varying, "phone" character varying, "card" character varying, "total" float, "completed" boolean, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210122204047"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateOrderItems (20210122204307)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE "order_items" ("id" bigserial primary key, "order_id" integer, "menu_item_id" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210122204307"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMenuItems (20210122204341)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE TABLE "menu_items" ("id" bigserial primary key, "category" character varying, "name" character varying, "price" float, "description" character varying, "time" integer, "sold_out" boolean, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210122204341"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddQuantityToOrderItems (20210122215516)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "order_items" ADD "quantity" integer[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210122215516"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddAddressToOrders (20210122220145)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "orders" ADD "address" character varying[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210122220145"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTextToOrders (20210122220524)
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "orders" ADD "text" character varying[0m
+  [1m[36mprimary::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210122220524"]]
+  [1m[35m (24.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-01-22 22:36:10.157712"], ["updated_at", "2021-01-22 22:36:10.157712"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(7787968138899382140)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (1.5ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "appetizer"], ["name", "Spicy Tuna Tartare"], ["price", 13.95], ["description", "AVOCADO, CALABRIAN CHILI, CELERY HEART & GRILLED BAGUETTE"], ["time", 10], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.159442"], ["updated_at", "2021-01-22 22:52:54.159442"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "appetizer"], ["name", "Sweet Potato Cauliflower Bisque"], ["price", 7.5], ["description", "SCALLIONS & PRESERVED LEMON"], ["time", 10], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.175324"], ["updated_at", "2021-01-22 22:52:54.175324"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "appetizer"], ["name", "Henry's Famous Spinach Loaf"], ["price", 8.75], ["description", "WHIPPED BUTTER & ROMANO CHEESE"], ["time", 10], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.178609"], ["updated_at", "2021-01-22 22:52:54.178609"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.4ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "appetizer"], ["name", "Caprese"], ["price", 14.0], ["description", "FRESH MOZZARELLA, VINE RIPE TOMATOES, PROSCIUTTO, PESTO & BALSAMIC"], ["time", 10], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.181911"], ["updated_at", "2021-01-22 22:52:54.181911"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "appetizer"], ["name", "Blistered Banana Peppers"], ["price", 13.75], ["description", "ITALIAN FOUR CHEESE BLEND & GRILLED BAGUETTE"], ["time", 10], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.184845"], ["updated_at", "2021-01-22 22:52:54.184845"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "appetizer"], ["name", "Arancini"], ["price", 9.75], ["description", "FRESH MOZZARELLA, SWEET PEAS & POMODORO"], ["time", 10], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.187828"], ["updated_at", "2021-01-22 22:52:54.187828"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "salad"], ["name", "Traditional Caesar"], ["price", 9.75], ["description", "ROMAINE HEARTS, CROUTONS, WHITE ANCHOVY & GARLIC ROMANO DRESSING"], ["time", 5], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.190535"], ["updated_at", "2021-01-22 22:52:54.190535"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "salad"], ["name", "Roman Salad"], ["price", 12.0], ["description", "ARUGULA, ROMAINE, CITRUS SEGMENTS, OIL-CURED OLIVES, FENNEL, SHAVED PARMESAN & EVOO"], ["time", 5], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.193266"], ["updated_at", "2021-01-22 22:52:54.193266"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.4ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "salad"], ["name", "Mista"], ["price", 9.25], ["description", "MIXED GREENS, TOMATO, CUCUMBER, RED ONION, CHICKPEAS, GORGONZOLA & ITALIAN VINAIGRETTE "], ["time", 5], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.196036"], ["updated_at", "2021-01-22 22:52:54.196036"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.4ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "pizza"], ["name", "Pepperoni"], ["price", 18.0], ["description", "GREEN OLIVES, OREGANO & POMODORO "], ["time", 20], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.199110"], ["updated_at", "2021-01-22 22:52:54.199110"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.4ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "pizza"], ["name", "Margherita"], ["price", 16.0], ["description", "FRESH MOZZARELLA, BASIL & TOMATO FRESCA"], ["time", 20], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.202012"], ["updated_at", "2021-01-22 22:52:54.202012"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "pizza"], ["name", "Steak"], ["price", 20.0], ["description", "MUSHROOMS, SPINACH, FONTINA & PORCINI CREMA"], ["time", 20], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.204854"], ["updated_at", "2021-01-22 22:52:54.204854"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "pizza"], ["name", "Sicilian White"], ["price", 18.0], ["description", "SLICED TOMATO, OREGANO, ONION, FONTINELLA,ROMANO & EVOO"], ["time", 20], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.207649"], ["updated_at", "2021-01-22 22:52:54.207649"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.4ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "pizza"], ["name", "Meatball"], ["price", 17.0], ["description", "HOT PEPPERS, RAPINI & SUNDAY SAUCE"], ["time", 20], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.210539"], ["updated_at", "2021-01-22 22:52:54.210539"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "pizza"], ["name", "Italian Sausage"], ["price", 17.0], ["description", "PESTO, SHISHITO PEPPERS, RICOTTA & SLICED ONIONS"], ["time", 20], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.214067"], ["updated_at", "2021-01-22 22:52:54.214067"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "pizza"], ["name", "Veggie"], ["price", 18.0], ["description", "BELL PEPPERS, MUSHROOMS, RED ONION, CAULIFLOWER, SPINACH, GORGONZOLA & TOMATO FRESCA"], ["time", 20], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.217204"], ["updated_at", "2021-01-22 22:52:54.217204"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "pizza"], ["name", "Roasted Chicken"], ["price", 17.0], ["description", "CAULIFLOWER, ASIAGO, PARSLEY & VODKA SAUCE"], ["time", 20], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.220176"], ["updated_at", "2021-01-22 22:52:54.220176"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "entree"], ["name", "Prime NY Strip Steak"], ["price", 47.95], ["description", "MASHED POTATOES, RAPINI & CARAMELIZED ONIONS"], ["time", 30], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.223230"], ["updated_at", "2021-01-22 22:52:54.223230"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "entree"], ["name", "Grilled Mediterranean Branzino"], ["price", 35.95], ["description", "ROASTED BUTTERNUT SQUASH, MARINATED BELL PEPPERS & DILL-TARRAGON SALSA VERDE 3"], ["time", 30], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.226089"], ["updated_at", "2021-01-22 22:52:54.226089"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "entree"], ["name", "Filet Mignon"], ["price", 44.95], ["description", "ASPARAGUS, ROASTED POTATOES & GARLIC BUTTER"], ["time", 30], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.228929"], ["updated_at", "2021-01-22 22:52:54.228929"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "entree"], ["name", "Heritage Pork Chop"], ["price", 28.95], ["description", "HOT & SWEET PEPPERS, SOFT POLENTA & MUSHROOMS"], ["time", 30], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.231793"], ["updated_at", "2021-01-22 22:52:54.231793"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.5ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "entree"], ["name", "Pan Roasted Chilean Seabass"], ["price", 38.95], ["description", "FINGERLING POTATOES, BROCCOLINI & LEMON CAPER BROWN BUTTER"], ["time", 30], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.234680"], ["updated_at", "2021-01-22 22:52:54.234680"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.4ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "entree"], ["name", "JT’s Famous Prime Steak Sandwich"], ["price", 20.75], ["description", "SAUTEED SPINACH, HOT BANANA PEPPERS, GARLIC, FONTINA & FRENCH FRIES"], ["time", 30], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.238491"], ["updated_at", "2021-01-22 22:52:54.238491"]]
+  [1m[35m (20.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "entree"], ["name", "Chicken Cutlet"], ["price", 25.95], ["description", "BABY SPINACH SALAD WITH CUCUMBER, TOMATO, RED ONION & WHITE BALSAMIC "], ["time", 30], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.263459"], ["updated_at", "2021-01-22 22:52:54.263459"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.2ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "entree"], ["name", "Wendel Farm Half Chicken"], ["price", 28.95], ["description", "FINGERLING POTATOES, BROCCOLINI & GARLIC-CHILI OIL"], ["time", 30], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.266399"], ["updated_at", "2021-01-22 22:52:54.266399"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "entree"], ["name", "Braised Beef Short Rib"], ["price", 34.95], ["description", "MASHED SWEET POTATOES, SPINACH, HORSERADISH & RED WINE PAN SAUCE"], ["time", 30], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.268968"], ["updated_at", "2021-01-22 22:52:54.268968"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "Pasta"], ["name", "Linguine & Clams"], ["price", 28.75], ["description", "ARUGULA, GARLIC, CHILI FLAKES, PARSLEY, GRANA PADANO & WHITE WINE"], ["time", 25], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.271596"], ["updated_at", "2021-01-22 22:52:54.271596"]]
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.2ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "Pasta"], ["name", "Pork Trilogy"], ["price", 26.0], ["description", "ITALIAN SAUSAGE, MEATBALL, PORK SHOULDER, RICCIA PASTA & SUNDAY SAUCE"], ["time", 25], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.274254"], ["updated_at", "2021-01-22 22:52:54.274254"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.5ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "Pasta"], ["name", "Rigatoni Bolognese"], ["price", 24.0], ["description", "GROUND BEEF, PORK, VEAL, TOMATO, RED WINE, FRESH HERBS & ROMANO CHEESE "], ["time", 25], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.276992"], ["updated_at", "2021-01-22 22:52:54.276992"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "dessert"], ["name", "Hot Fudge Sundae"], ["price", 8.75], ["description", "VANILLA ICE CREAM, BANANAS & SPICED PECANS "], ["time", 5], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.280521"], ["updated_at", "2021-01-22 22:52:54.280521"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "dessert"], ["name", "Apple Crumble"], ["price", 9.25], ["description", "VANILLA ICE CREAM "], ["time", 5], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.283307"], ["updated_at", "2021-01-22 22:52:54.283307"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.4ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "dessert"], ["name", "NY Style Cheesecake"], ["price", 8.75], ["description", "WHIPPED CREAM & BERRIES "], ["time", 5], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.286018"], ["updated_at", "2021-01-22 22:52:54.286018"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mMenuItem Create (0.3ms)[0m  [1m[32mINSERT INTO "menu_items" ("category", "name", "price", "description", "time", "sold_out", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["category", "dessert"], ["name", "Warm Brownie"], ["price", 8.75], ["description", "WHIPPED CREAM & TOFFEE"], ["time", 5], ["sold_out", false], ["created_at", "2021-01-22 22:52:54.289463"], ["updated_at", "2021-01-22 22:52:54.289463"]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
