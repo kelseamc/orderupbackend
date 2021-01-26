@@ -10,6 +10,11 @@ class Api::V1::OrdersController < ApplicationController
         render json: order
     end
 
+    def show
+        order = Order.find(params[:id])
+        render json:order
+    end
+
     def update
         order = Order.find(params[:id])
         order.update(text: params[:text])
